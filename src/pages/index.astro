@@ -1,4 +1,6 @@
 ---
+import Linechart from "../components/Linechart.astro";
+
 const pageTitle = "Jackpot Tracker";
 const pageDescription =
   "See the position of Jackpot team members on the Top 500 X-Rank leaderboards";
@@ -36,6 +38,7 @@ const pageDescription =
   >
     <main class="max-w-6xl px-4 sm:px-10 mx-auto w-full overflow-x-hidden">
       <img class="h-56" src="/images/logo.webp" alt="" />
+      <Linechart />
     </main>
   </body>
 </html>
