@@ -20,5 +20,16 @@ button.onclick = function () {
         power: parseInt(list.querySelectorAll(".power")[index].textContent)
     })).sort((a, b) => b.power - a.power).map(item => item.id);
 
+    const currentFirst = list.children[0];
     sortableList.sort(order, true);
+    const newFirst = list.children[0];
+
+    for (let item of list.children) {
+        item.setAttribute("class", "");
+        item.classList.add(`item-${Array.from(list.children).indexOf(item) + 1}`);
+    }
+
+    if (currentFirst !== newFirst) {
+        console.log("New first item!");
+    }
 }
