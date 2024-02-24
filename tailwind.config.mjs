@@ -9,6 +9,10 @@ export default {
 				background: '#0E0E0E',
 			},
 		},
+		fontFamily: {
+			'Blitz': ['Blitz'],
+			'Blitz-Bold': ['Blitz-Bold'],
+		},
 	},
 	plugins: [],
 }
