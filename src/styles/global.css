@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Blitz";
+  src: url("/fonts/BlitzMain.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Blitz-Bold";
+  src: url("/fonts/BlitzBold.otf") format("opentype");
+}
+
 * {
   min-width: 0;
 }
