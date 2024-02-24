@@ -62,7 +62,16 @@ for (let { node } of data.data.xRanking.xRankingAr.edges) {
         return badge ? `https://raw.githubusercontent.com/Leanny/splat3/main/images/badge/Badge_${badge.Name}.webp` : null;
     });
 
-    const splashtag = document.querySelector(".splashtag").cloneNode(true);
+    const item = document.querySelector(".item-template").cloneNode(true);
+    item.classList.remove("item-template", "hidden");
+    item.classList.add("grid", `item-${Array.from(list.children).length + 1}`);
+
+    item.querySelector(".item-place").textContent = Array.from(list.children).length + 1;
+    item.querySelector(".item-power").textContent = xPower;
+    item.querySelector(".item-image").src = weaponLink;
+
+
+    const splashtag = item.querySelector(".splashtag");
     splashtag.style.color = `rgb(${textColor.r * 255}, ${textColor.g * 255}, ${textColor.b * 255})`;
 
     splashtag.querySelector(".splashtag-banner").setAttribute("href", bannerLink);
@@ -74,5 +83,5 @@ for (let { node } of data.data.xRanking.xRankingAr.edges) {
         splashtag.querySelector(`.splashtag-badge${index + 1}`).setAttribute("href", badge);
     });
 
-    document.body.appendChild(splashtag);
+    list.appendChild(item);
 }

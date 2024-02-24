@@ -1,7 +1,6 @@
 ---
 import Linechart from "../components/Linechart.astro";
 import Ranking from "../components/Ranking.astro";
-import Splashtag from "../components/Splashtag.astro";
 import "../styles/global.css";
 
 const pageTitle = "Jackpot Tracker";
@@ -37,13 +36,12 @@ const pageDescription =
     <meta name="twitter:image" content="" />
   </head>
   <body
-    class="bg-background overflow-x-hidden text-textPrimary min-h-screen w-full break-words"
+    class="bg-background overflow-x-hidden text-textPrimary min-h-screen w-full break-words font-Blitz"
   >
     <main class="max-w-6xl px-4 sm:px-10 mx-auto w-full overflow-x-hidden">
-      <img class="h-56" src="/images/logo.webp" alt="" />
+      <img class="logo h-56" src="/images/logo.webp" alt="" />
       <Ranking />
       <Linechart />
     </main>
-    <Splashtag />
   </body>
 </html>
