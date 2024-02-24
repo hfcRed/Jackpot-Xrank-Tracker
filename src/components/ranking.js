@@ -57,19 +57,42 @@ for (let node of nodes) {
 
     for (let weapon of weaponData) {
         if (weapon.Id == weaponID) {
-            weaponLink = `https://raw.githubusercontent.com/Leanny/splat3/main/images/weapon_flat/Path_Wst_${weapon.__RowId}.webp`
+            const image = await fetch(`https://raw.githubusercontent.com/Leanny/splat3/main/images/weapon_flat/Path_Wst_${weapon.__RowId}.webp`);
+            weaponLink = image.url;
         }
     }
 
     for (let banner of bannerData) {
         if (banner.Id == bannerID) {
-            bannerLink = `https://raw.githubusercontent.com/Leanny/splat3/main/images/npl/${banner.__RowId}.webp`
+            const image = await fetch(`https://raw.githubusercontent.com/Leanny/splat3/main/images/npl/${banner.__RowId}.webp`);
+            bannerLink = image.url;
         }
     }
 
-    for (let badge of badgeData) {
-        if (badgeIDs.includes(badge.Id.toString())) {
-            badgeLinks.push(`https://raw.githubusercontent.com/Leanny/splat3/main/images/badge/Badge_${badge.Name}.webp`);
+    for (let badge of badgeIDs) {
+        if (badge == undefined) {
+            badgeLinks.push("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=");
+            continue;
+        }
+        for (let data of badgeData) {
+            if (data.Id == badge) {
+                const image = await fetch(`https://raw.githubusercontent.com/Leanny/splat3/main/images/badge/Badge_${data.Name}.webp`);
+                badgeLinks.push(image.url);
+            }
         }
     }
+
+    const splashtag = document.querySelector(".splashtag").cloneNode(true);
+    splashtag.style.color = `rgb(${textColor.r * 255}, ${textColor.g * 255}, ${textColor.b * 255})`;
+
+    splashtag.querySelector(".splashtag-banner").setAttribute("href", bannerLink);
+    splashtag.querySelector(".splashtag-title").textContent = byname;
+    splashtag.querySelector(".splashtag-name").textContent = name;
+    splashtag.querySelector(".splashtag-id").textContent = `#${nameId}`;
+
+    badgeLinks.forEach((badge, index) => {
+        splashtag.querySelector(`.splashtag-badge${index + 1}`).setAttribute("href", badge);
+    });
+
+    document.body.appendChild(splashtag);
 }
