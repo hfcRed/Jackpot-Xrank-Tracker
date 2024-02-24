@@ -35,14 +35,13 @@ button.onclick = function () {
     }
 }
 
-const weaponPromise = await fetch("https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/WeaponInfoMain.json");
-const weaponData = await weaponPromise.json();
+const urls = [
+    "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/WeaponInfoMain.json",
+    "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/NamePlateBgInfo.json",
+    "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/BadgeInfo.json"
+];
 
-const bannerPromise = await fetch("https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/NamePlateBgInfo.json");
-const bannerData = await bannerPromise.json();
-
-const badgePromise = await fetch("https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/BadgeInfo.json");
-const badgeData = await badgePromise.json();
+const [weaponData, bannerData, badgeData] = await Promise.all(urls.map(url => fetch(url).then(response => response.json())));
 
 for (let { node } of data.data.xRanking.xRankingAr.edges) {
     const weaponID = atob(node.weapon.id).toString().split("-")[1];
@@ -50,36 +49,18 @@ for (let { node } of data.data.xRanking.xRankingAr.edges) {
     const badgeIDs = node.nameplate.badges.map(badge => atob(badge?.id ? badge.id : null).toString().split("-")[1]);
     const { name, byname, xPower, nameId, nameplate: { background: { textColor } } } = node;
 
-    let weaponLink;
-    let bannerLink;
-    let badgeLinks = [];
+    const weapon = weaponData.find(weapon => weapon.Id == weaponID);
+    const weaponLink = weapon ? `https://raw.githubusercontent.com/Leanny/splat3/main/images/weapon_flat/Path_Wst_${weapon.__RowId}.webp` : null;
 
-    for (let weapon of weaponData) {
-        if (weapon.Id == weaponID) {
-            const image = await fetch(`https://raw.githubusercontent.com/Leanny/splat3/main/images/weapon_flat/Path_Wst_${weapon.__RowId}.webp`);
-            weaponLink = image.url;
-        }
-    }
+    const banner = bannerData.find(banner => banner.Id == bannerID);
+    const bannerLink = banner ? `https://raw.githubusercontent.com/Leanny/splat3/main/images/npl/${banner.__RowId}.webp` : null;
 
-    for (let banner of bannerData) {
-        if (banner.Id == bannerID) {
-            const image = await fetch(`https://raw.githubusercontent.com/Leanny/splat3/main/images/npl/${banner.__RowId}.webp`);
-            bannerLink = image.url;
-        }
-    }
+    const badgeLinks = badgeIDs.map(badgeID => {
+        if (badgeID == undefined) return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
-    for (let badge of badgeIDs) {
-        if (badge == undefined) {
-            badgeLinks.push("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=");
-            continue;
-        }
-        for (let data of badgeData) {
-            if (data.Id == badge) {
-                const image = await fetch(`https://raw.githubusercontent.com/Leanny/splat3/main/images/badge/Badge_${data.Name}.webp`);
-                badgeLinks.push(image.url);
-            }
-        }
-    }
+        const badge = badgeData.find(data => data.Id == badgeID);
+        return badge ? `https://raw.githubusercontent.com/Leanny/splat3/main/images/badge/Badge_${badge.Name}.webp` : null;
+    });
 
     const splashtag = document.querySelector(".splashtag").cloneNode(true);
     splashtag.style.color = `rgb(${textColor.r * 255}, ${textColor.g * 255}, ${textColor.b * 255})`;
