@@ -3,38 +3,64 @@ import Splashtag from "./Splashtag.astro";
 ---
 
 <div
-  class="item-template hidden grid-rows-1 grid-cols-[0.1fr_0.5fr_1fr] bg-slate-700 pl-8 rounded-xl items-center p-4 justify-between max-w-[45rem] w-full"
+  class="item-template hidden grid-rows-1 grid-cols-[0.1fr_0.5fr_1fr] pl-8 rounded-xl items-center p-4 justify-between max-w-[45rem] w-full bg-gradient-to-r from-slate-800/50 to-slate-600/50 to-bg-sl backdrop-blur-xl"
 >
   <div class="item-place justify-self-start"></div>
-  <div class="flex flex-col items-center justify-self-center">
+  <div class="flex flex-col items-center justify-self-center gap-1">
     <div
-      class="bg-slate-400 text-black text-lg py-1 px-2 rounded-full shadow-xl w-full text-center"
+      class="item-power bg-slate-600 text-lg py-1 px-2 rounded-full shadow-lg w-full text-center"
     >
-      <span class="item-power">100</span>
     </div>
     <img class="item-image w-20" src="" alt="" />
   </div>
   <Splashtag />
 </div>
 
-<style is:global>
+<style>
+  :root {
+    --first-place: 235, 235, 40;
+    --second-place: 220, 220, 220;
+    --third-place: 210, 120, 35;
+    --fourth-place: 130, 130, 130;
+    --background-alpha: 0.1;
+  }
   .item-1 .item-place {
-    color: rgb(252, 221, 48);
+    color: rgb(var(--first-place));
     font-size: 5rem;
   }
 
   .item-2 .item-place {
-    color: rgb(219, 214, 214);
+    color: rgb(var(--second-place));
     font-size: 4rem;
   }
 
   .item-3 .item-place {
-    color: rgb(204, 126, 48);
+    color: rgb(var(--third-place));
     font-size: 3rem;
   }
 
   .item-4 .item-place {
-    color: #838383;
+    color: rgb(var(--fourth-place));
     font-size: 2rem;
   }
+
+  /* .item-1 {
+    background-color: rgba(var(--first-place), var(--background-alpha));
+    border: 2px solid rgb(var(--first-place));
+  }
+
+  .item-2 {
+    background-color: rgba(var(--second-place), var(--background-alpha));
+    border: 2px solid rgb(var(--second-place));
+  }
+
+  .item-3 {
+    background-color: rgba(var(--third-place), var(--background-alpha));
+    border: 2px solid rgb(var(--third-place));
+  }
+
+  .item-4 {
+    background-color: rgba(var(--fourth-place), var(--background-alpha));
+    border: 2px solid rgb(var(--fourth-place));
+  } */
 </style>
