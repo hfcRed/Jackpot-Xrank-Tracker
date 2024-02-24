@@ -12,13 +12,13 @@ let sortableList = new Sortable.create(list, {
 const button = document.querySelector(".button");
 
 button.onclick = function () {
-    for (let power of list.querySelectorAll(".power")) {
+    for (let power of list.querySelectorAll(".item-power")) {
         power.textContent = Math.floor(Math.random() * 10000);
     }
 
     const order = sortableList.toArray().map((item, index) => ({
         id: item,
-        power: parseInt(list.querySelectorAll(".power")[index].textContent)
+        power: parseInt(list.querySelectorAll(".item-power")[index].textContent)
     })).sort((a, b) => b.power - a.power).map(item => item.id);
 
     const currentFirst = list.children[0];
@@ -26,12 +26,9 @@ button.onclick = function () {
     const newFirst = list.children[0];
 
     for (let item of list.children) {
-        item.setAttribute("class", "");
+        item.classList.remove("item-1", "item-2", "item-3", "item-4");
         item.classList.add(`item-${Array.from(list.children).indexOf(item) + 1}`);
-    }
-
-    if (currentFirst !== newFirst) {
-        console.log("New first item!");
+        item.querySelector(".item-place").textContent = Array.from(list.children).indexOf(item) + 1;
     }
 }
 
