@@ -1,4 +1,5 @@
 import { Sortable } from 'sortablejs/modular/sortable.core.esm.js';
+import data from '../response.json';
 
 const list = document.querySelector(".list");
 
@@ -31,5 +32,44 @@ button.onclick = function () {
 
     if (currentFirst !== newFirst) {
         console.log("New first item!");
+    }
+}
+
+const nodes = data.data.xRanking.xRankingAr.edges;
+const weaponPromise = await fetch("https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/WeaponInfoMain.json");
+const weaponData = await weaponPromise.json();
+
+const bannerPromise = await fetch("https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/NamePlateBgInfo.json");
+const bannerData = await bannerPromise.json();
+
+const badgePromise = await fetch("https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/BadgeInfo.json");
+const badgeData = await badgePromise.json();
+
+for (let node of nodes) {
+    const weaponID = atob(node.node.weapon.id).toString().split("-")[1];
+    const bannerID = atob(node.node.nameplate.background.id).toString().split("-")[1];
+    const badgeIDs = node.node.nameplate.badges.map(badge => atob(badge?.id ? badge.id : null).toString().split("-")[1]);
+    const { name, byname, xPower, nameId, nameplate: { background: { textColor } } } = node.node;
+
+    let weaponLink;
+    let bannerLink;
+    let badgeLinks = [];
+
+    for (let weapon of weaponData) {
+        if (weapon.Id == weaponID) {
+            weaponLink = `https://raw.githubusercontent.com/Leanny/splat3/main/images/weapon_flat/Path_Wst_${weapon.__RowId}.webp`
+        }
+    }
+
+    for (let banner of bannerData) {
+        if (banner.Id == bannerID) {
+            bannerLink = `https://raw.githubusercontent.com/Leanny/splat3/main/images/npl/${banner.__RowId}.webp`
+        }
+    }
+
+    for (let badge of badgeData) {
+        if (badgeIDs.includes(badge.Id.toString())) {
+            badgeLinks.push(`https://raw.githubusercontent.com/Leanny/splat3/main/images/badge/Badge_${badge.Name}.webp`);
+        }
     }
 }
