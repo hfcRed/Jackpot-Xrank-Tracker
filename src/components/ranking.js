@@ -35,7 +35,6 @@ button.onclick = function () {
     }
 }
 
-const nodes = data.data.xRanking.xRankingAr.edges;
 const weaponPromise = await fetch("https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/WeaponInfoMain.json");
 const weaponData = await weaponPromise.json();
 
@@ -45,11 +44,11 @@ const bannerData = await bannerPromise.json();
 const badgePromise = await fetch("https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/BadgeInfo.json");
 const badgeData = await badgePromise.json();
 
-for (let node of nodes) {
-    const weaponID = atob(node.node.weapon.id).toString().split("-")[1];
-    const bannerID = atob(node.node.nameplate.background.id).toString().split("-")[1];
-    const badgeIDs = node.node.nameplate.badges.map(badge => atob(badge?.id ? badge.id : null).toString().split("-")[1]);
-    const { name, byname, xPower, nameId, nameplate: { background: { textColor } } } = node.node;
+for (let { node } of data.data.xRanking.xRankingAr.edges) {
+    const weaponID = atob(node.weapon.id).toString().split("-")[1];
+    const bannerID = atob(node.nameplate.background.id).toString().split("-")[1];
+    const badgeIDs = node.nameplate.badges.map(badge => atob(badge?.id ? badge.id : null).toString().split("-")[1]);
+    const { name, byname, xPower, nameId, nameplate: { background: { textColor } } } = node;
 
     let weaponLink;
     let bannerLink;
