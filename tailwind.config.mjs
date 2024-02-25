@@ -8,10 +8,13 @@ export default {
 				textSecondary: '#AFAFB2',
 				background: '#0E0E0E',
 			},
-		},
-		fontFamily: {
-			'Blitz': ['Blitz'],
-			'Blitz-Bold': ['Blitz-Bold'],
+			fontFamily: {
+				'Blitz': ['Blitz'],
+				'Blitz-Bold': ['Blitz-Bold'],
+			},
+			screens: {
+				'ssm': '500px',
+			},
 		},
 	},
 	plugins: [],
