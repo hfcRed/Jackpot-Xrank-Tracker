@@ -28,7 +28,6 @@ button.onclick = function () {
     for (let item of list.children) {
         item.classList.remove("item-1", "item-2", "item-3", "item-4");
         item.classList.add(`item-${Array.from(list.children).indexOf(item) + 1}`);
-        item.querySelector(".item-place").textContent = Array.from(list.children).indexOf(item) + 1;
     }
 }
 
@@ -63,7 +62,6 @@ for (let { node } of data.data.xRanking.xRankingAr.edges) {
     item.classList.remove("item-template", "hidden");
     item.classList.add("grid", `item-${Array.from(list.children).length + 1}`);
 
-    item.querySelector(".item-place").textContent = Array.from(list.children).length + 1;
     item.querySelector(".item-power").textContent = xPower;
     item.querySelector(".item-image").src = weaponLink;
 
