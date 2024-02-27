@@ -7,7 +7,9 @@ export default {
 				textPrimary: '#FEFEFE',
 				textSecondary: '#AFAFB2',
 				background: '#1A1212',
-				backgroundDark: '#0D0000',
+				backgroundDark: '#0D0909',
+				backgroundLight: '#261B1B',
+				backgroundLighter: '#663D3D',
 			},
 			fontFamily: {
 				'Blitz': ['Blitz'],
@@ -19,6 +21,7 @@ export default {
 			dropShadow: {
 				'logo': ['-10px -10px 200px #66FAF6', '10px 10px 50px #ff00ff'],
 				'crown': ['0px 0px 200px #F54910', '0px 0px 50px #F54910', '0px 150px 200px #F54910'],
+				'filter': ['0px -75px 100px rgba(245, 16, 16, 0.25)'],
 			}
 		},
 	},
