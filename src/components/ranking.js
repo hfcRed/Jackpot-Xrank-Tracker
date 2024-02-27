@@ -1,5 +1,6 @@
 import { Sortable } from 'sortablejs/modular/sortable.core.esm.js';
 import data from '../response.json';
+import OBSWebSocket from 'obs-websocket-js';
 
 const list = document.querySelector(".list");
 
@@ -32,9 +33,9 @@ button.onclick = function () {
 }
 
 const urls = [
-    "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/WeaponInfoMain.json",
-    "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/NamePlateBgInfo.json",
-    "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/700/BadgeInfo.json"
+    "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/600/WeaponInfoMain.json",
+    "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/600/NamePlateBgInfo.json",
+    "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/600/BadgeInfo.json"
 ];
 
 const [weaponData, bannerData, badgeData] = await Promise.all(urls.map(url => fetch(url).then(response => response.json())));
@@ -80,3 +81,11 @@ for (let { node } of data.data.xRanking.xRankingAr.edges) {
 
     list.appendChild(item);
 }
+
+let obs = new OBSWebSocket();
+
+await obs.connect('ws://127.0.0.1:4455', "Waldfee");
+
+const scenes = await obs.call("SetInputSettings", { inputName: "Test", inputSettings: { text: "New" } })
+
+console.log(scenes);
