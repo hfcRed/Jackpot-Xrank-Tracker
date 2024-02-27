@@ -89,3 +89,23 @@ await obs.connect('ws://127.0.0.1:4455', "Waldfee");
 const scenes = await obs.call("SetInputSettings", { inputName: "Test", inputSettings: { text: "New" } })
 
 console.log(scenes);
+
+const filters = document.querySelector(".filters");
+const zonesFilter = filters.querySelector(".filter-zones");
+const towerFilter = filters.querySelector(".filter-tower");
+const rainmakerFilter = filters.querySelector(".filter-rainmaker");
+const clamFilter = filters.querySelector(".filter-clam");
+
+const filterButtons = [zonesFilter, towerFilter, rainmakerFilter, clamFilter];
+
+for (let button of filterButtons) {
+    button.onclick = function () {
+        if (button.classList.contains("bg-backgroundLighter")) return;
+
+        for (let button of filterButtons) {
+            button.classList.remove("bg-backgroundLighter");
+        }
+
+        button.classList.add("bg-backgroundLighter");
+    }
+}
