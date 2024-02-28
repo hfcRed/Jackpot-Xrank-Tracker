@@ -19,32 +19,26 @@ const filters = [
 ];
 ---
 
-<div class="flex justify-center my-8">
-  <div
-    class="max-w-[45rem] w-full bg-backgroundDark/60 flex flex-col sm:flex-row justify-between items-center py-4 px-8 gap-4 item relative"
-  >
-    <div class="filters flex justify-center gap-4">
-      {
-        filters.map((filter) => (
-          <button
-            class:list={[
-              `filter-${filter.name}`,
-              "w-10 h-10 hover:-rotate-12 hover:scale-105 transition-all duration-200 border-2 border-transparent hover:border-backgroundLighter rounded-lg bg-backgroundLight p-1",
-            ]}
-          >
-            <img
-              class="z-10 top-0 left-0"
-              src={filter.icon}
-              alt={filter.name}
-            />
-          </button>
-        ))
-      }
-    </div>
-    <p>
-      New data: <span class="timer w-14 inline-block text-end">00:00</span>
-    </p>
+<div
+  class="options w-full bg-backgroundDark flex flex-col sm:flex-row justify-between items-center py-4 px-8 gap-4 rounded-xl my-8"
+>
+  <div class="filters flex justify-center gap-4">
+    {
+      filters.map((filter) => (
+        <button
+          class:list={[
+            `filter-${filter.name}`,
+            "w-10 h-10 hover:-rotate-12 hover:scale-105 transition-all duration-200 border-2 border-transparent hover:border-backgroundLighter rounded-lg bg-backgroundLight p-1",
+          ]}
+        >
+          <img src={filter.icon} alt={filter.name} />
+        </button>
+      ))
+    }
   </div>
+  <p class="countdown">
+    New data: <span class="timer w-14 inline-block text-end">00:00</span>
+  </p>
 </div>
 
 <style>
