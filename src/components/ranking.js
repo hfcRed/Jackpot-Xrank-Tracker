@@ -114,15 +114,24 @@ const timer = document.querySelector(".timer");
 const minutesTarget = [6, 21, 36, 51];
 
 let currentTime = new Date().getMinutes();
-let nextMinute = minutesTarget.find(minute => minute > currentTime) || minutesTarget[0];
+let nextMinute = minutesTarget.find(minute => minute > currentTime);
+
+if (nextMinute === undefined) {
+    nextMinute = minutesTarget[0];
+    currentTime -= 60;
+}
 
 let minutes = (nextMinute - currentTime) + 2;
 let seconds = 0;
 
 let countdown = setInterval(function () {
     if (minutes === 0 && seconds === 0) {
-        nextMinute = minutesTarget.find(minute => minute > currentTime) || minutesTarget[0];
         currentTime = new Date().getMinutes();
+        nextMinute = minutesTarget.find(minute => minute > currentTime);
+        if (nextMinute === undefined) {
+            nextMinute = minutesTarget[0];
+            currentTime -= 60;
+        }
         minutes = (nextMinute - currentTime) + 2;
     }
     else {
