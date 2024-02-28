@@ -19,8 +19,8 @@ export default {
 				'ssm': '500px',
 			},
 			dropShadow: {
-				'logo': ['-10px -10px 200px #66FAF6', '10px 10px 50px #ff00ff'],
-				'crown': ['0px 0px 200px #F54910', '0px 0px 50px #F54910', '0px 150px 200px #F54910'],
+				'logo': ['20px 20px 100px #ff00ff', '0px 0px 50px #ff00ff'],
+				'crown': ['0px 0px 100px #F54910', '0px 0px 50px #F54910', '0px 150px 100px #F54910', '0px 250px 100px #F51081'],
 				'filter': ['0px -75px 100px rgba(245, 16, 16, 0.25)'],
 			}
 		},
