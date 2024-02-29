@@ -89,11 +89,26 @@ const submit = document.getElementById("obs-submit");
 let obs;
 
 submit.onclick = async function () {
+    saveSettings();
+
+    if (!address.value || !password.value || !source.value) return;
+    if (obs) obs.disconnect();
     obs = new OBSWebSocket();
     await obs.connect(address.value, password.value);
-    await obs.call("SetInputSettings", { inputName: source.value, inputSettings: { text: "New" } })
 
-    saveSettings();
+    const names = document.querySelectorAll(".splashtag-name");
+    const powers = document.querySelectorAll(".item-power");
+    let text;
+
+    for (let index = 0; index < (names.length - 1); index++) {
+        const line = `${powers[index].textContent}\n${names[index].textContent}\n`;
+        text = text ? `${text}\n${line}` : line;
+    }
+
+    await obs.call("SetInputSettings", {
+        inputName: source.value,
+        inputSettings: { text: text, color: 15790320, outline: true, outline_size: 5, outline_color: 0, font: { face: "Calibri", size: 50 } }
+    })
 }
 
 function saveSettings() {
