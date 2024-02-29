@@ -81,13 +81,44 @@ for (let { node } of data.data.xRanking.xRankingAr.edges) {
     list.appendChild(item);
 }
 
-let obs = new OBSWebSocket();
+const address = document.getElementById("obs-address");
+const password = document.getElementById("obs-password");
+const source = document.getElementById("obs-source");
+const submit = document.getElementById("obs-submit");
 
-await obs.connect('ws://127.0.0.1:4455', "Waldfee");
+let obs;
 
-const scenes = await obs.call("SetInputSettings", { inputName: "Test", inputSettings: { text: "New" } })
+submit.onclick = async function () {
+    obs = new OBSWebSocket();
+    await obs.connect(address.value, password.value);
+    await obs.call("SetInputSettings", { inputName: source.value, inputSettings: { text: "New" } })
 
-console.log(scenes);
+    saveSettings();
+}
+
+function saveSettings() {
+    localStorage.setItem("obs-data", JSON.stringify({
+        address: address.value,
+        password: password.value,
+        source: source.value
+    }));
+}
+
+function loadSettings() {
+    const data = JSON.parse(localStorage.getItem("obs-data"));
+    if (!data) return;
+
+    address.value = data.address;
+    password.value = data.password;
+    source.value = data.source;
+    submit.click();
+}
+
+window.onbeforeunload = function () {
+    if (obs) obs.disconnect();
+}
+
+loadSettings();
 
 const filters = document.querySelector(".filters");
 const zonesFilter = filters.querySelector(".filter-zones");
