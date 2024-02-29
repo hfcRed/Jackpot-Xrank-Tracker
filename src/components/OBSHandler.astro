@@ -3,10 +3,10 @@
 ---
 
 <div
-  class="obs-form bg-backgroundDark rounded-xl py-4 px-8 flex justify-between"
+  class="obs-form bg-backgroundDark rounded-xl py-4 px-8 flex flex-col gap-8"
 >
-  <div class="flex gap-8">
-    <div>
+  <div class="flex flex-col sm:flex-row gap-4">
+    <div class="flex flex-col">
       <p class="text-sm mb-1 pl-1">Address</p>
       <input
         class="bg-backgroundLight focus:bg-backgroundLighter transition-colors duration-200 rounded-lg py-2 px-4"
@@ -15,7 +15,7 @@
         value="ws://127.0.0.1:4455"
       />
     </div>
-    <div>
+    <div class="flex flex-col">
       <p class="text-sm mb-1 pl-1">Password</p>
       <input
         class="bg-backgroundLight focus:bg-backgroundLighter transition-colors duration-200 rounded-lg py-2 px-4"
@@ -24,7 +24,7 @@
         value=""
       />
     </div>
-    <div>
+    <div class="flex flex-col">
       <p class="text-sm mb-1 pl-1">Source</p>
       <input
         class="bg-backgroundLight focus:bg-backgroundLighter transition-colors duration-200 rounded-lg py-2 px-4"
@@ -35,7 +35,7 @@
     </div>
   </div>
   <button
-    class="bg-backgroundLight hover:bg-backgroundLighter transition-colors duration-200 rounded-lg py-2 px-4 h-fit mt-auto"
+    class="bg-backgroundLight hover:bg-backgroundLighter transition-colors duration-200 rounded-lg py-2 px-4"
     id="obs-submit">Connect</button
   >
 </div>
