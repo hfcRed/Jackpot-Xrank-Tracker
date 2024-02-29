@@ -2,8 +2,8 @@
 import Splashtag from "./Splashtag.astro";
 ---
 
-<div
-  class="item-template item hidden ssm:grid-cols-[0.65fr_1fr] items-center p-4 gap-4 ssm:justify-between w-full bg-backgroundDark relative"
+<li
+  class="item-template hidden ssm:grid-cols-[0.65fr_1fr] items-center p-4 gap-4 ssm:justify-between w-full bg-backgroundDark rounded-xl"
 >
   <div class="flex items-center justify-around">
     <div class="item-place h-20 w-20"></div>
@@ -16,7 +16,7 @@ import Splashtag from "./Splashtag.astro";
     </div>
   </div>
   <Splashtag />
-</div>
+</li>
 
 <style>
   .item::before {

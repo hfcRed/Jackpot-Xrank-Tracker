@@ -5,7 +5,6 @@ import OBSWebSocket from 'obs-websocket-js';
 const list = document.querySelector(".list");
 
 let sortableList = new Sortable.create(list, {
-    swapClass: "highlight",
     animation: 1000,
     disabled: true,
 });
