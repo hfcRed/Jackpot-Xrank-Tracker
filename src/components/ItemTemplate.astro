@@ -19,58 +19,6 @@ import Splashtag from "./Splashtag.astro";
 </li>
 
 <style>
-  .item::before {
-    position: absolute;
-    display: inline-block;
-    content: "";
-    background-color: inherit;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    height: 100%;
-    width: 66px;
-    top: 0;
-    left: -66px;
-    mask: url("/images/paint-right.webp") repeat-y;
-    -webkit-mask: url("/images/paint-right.webp") repeat-y;
-    mask-size: 100% 300%;
-  }
-
-  .item::after {
-    position: absolute;
-    display: inline-block;
-    content: "";
-    background-color: inherit;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    height: 100%;
-    width: 66px;
-    top: 0;
-    right: -66px;
-    mask: url("/images/paint-left.webp") repeat-y;
-    -webkit-mask: url("/images/paint-left.webp") repeat-y;
-    mask-size: 100% 300%;
-  }
-
-  .item:nth-child(1)::before,
-  .item:nth-child(1)::after {
-    mask-position: 100% 0%;
-  }
-
-  .item:nth-child(2)::before,
-  .item:nth-child(2)::after {
-    mask-position: 100% 100%;
-  }
-
-  .item:nth-child(3)::before,
-  .item:nth-child(3)::after {
-    mask-position: 100% 200%;
-  }
-
-  .item:nth-child(4)::before,
-  .item:nth-child(4)::after {
-    mask-position: 100% 300%;
-  }
-
   .item-1 .item-place {
     background-image: url("../../public/images/medal-first.webp");
     background-size: cover;
