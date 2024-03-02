@@ -17,7 +17,6 @@ window.addEventListener("load", async () => {
 
     await updateData();
     prepareFilters();
-    startCountdown();
 
     spinner.classList.add("hidden");
     spinner.classList.remove("flex");
@@ -33,6 +32,7 @@ async function updateData() {
     await drawItems();
     orderItems();
     loadSettings();
+    startCountdown();
 };
 
 async function getRankData() {
@@ -156,29 +156,30 @@ function prepareFilters() {
 function startCountdown() {
     const timer = document.querySelector(".timer");
     const minutesTarget = [8, 23, 38, 53];
+    const nextMinute = minutesTarget.find(minute => minute > new Date().getMinutes()) || minutesTarget[0];
 
-    let currentTime = new Date().getMinutes();
-    let nextMinute = minutesTarget.find(minute => minute > currentTime);
-
-    if (nextMinute === undefined) {
-        nextMinute = minutesTarget[0];
-        currentTime -= 60;
-    }
-
-    let minutes = (nextMinute - currentTime);
-    let seconds = 0;
+    let minutes;
+    let seconds;
 
     let countdown = setInterval(function () {
-        if (minutes === 0 && seconds === 0 || minutes < 0) {
+        const currentMinute = new Date().getMinutes();
+        const currentSecond = new Date().getSeconds();
+
+        if (minutes === 0 && seconds === 0) {
             clearInterval(countdown);
             updateData();
-            startCountdown();
-        }
-        else {
-            minutes = nextMinute - new Date().getMinutes() - 1;
-            seconds = 59 - new Date().getSeconds();
-            timer.textContent = `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-        }
+            return;
+        };
+
+        minutes = currentMinute <= nextMinute ? nextMinute - currentMinute - 1 : 59 - currentMinute + nextMinute;
+        seconds = 59 - currentSecond;
+        timer.textContent = `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+
+        if (minutes < 0) {
+            clearInterval(countdown);
+            updateData();
+            return;
+        };
     }, 1000);
 };
 
