@@ -1,6 +1,6 @@
 import { Sortable } from 'sortablejs/modular/sortable.core.esm.js';
 import data from '../response.json';
-import OBSWebSocket from 'obs-websocket-js';
+import { loadSettings } from './obsHandler.js';
 
 let spinner;
 let dataa;
@@ -18,6 +18,7 @@ window.addEventListener("load", async () => {
     await updateData();
     prepareFilters();
     startCountdown();
+    loadSettings();
 
     spinner.classList.add("hidden");
     spinner.classList.remove("flex");
@@ -160,6 +161,7 @@ function prepareFilters() {
     }
 };
 
+// This function will have to run inside a web worker
 function startCountdown() {
     const timer = document.querySelector(".timer");
     const minutesTarget = [8, 23, 38, 53];
@@ -201,59 +203,3 @@ const button = document.querySelector(".button");
 button.onclick = function () {
     orderItems();
 }
-
-const address = document.getElementById("obs-address");
-const password = document.getElementById("obs-password");
-const source = document.getElementById("obs-source");
-const submit = document.getElementById("obs-submit");
-
-let obs;
-
-submit.onclick = async function () {
-    saveSettings();
-
-    if (!address.value || !password.value || !source.value) return;
-    if (obs) obs.disconnect();
-    obs = new OBSWebSocket();
-    await obs.connect(address.value, password.value);
-
-    const names = document.querySelectorAll(".splashtag-name");
-    const powers = document.querySelectorAll(".item-power");
-    let text;
-
-    for (let index = 0; index < (names.length - 1); index++) {
-        const line = `${powers[index].textContent}\n${names[index].textContent}\n`;
-        text = text ? `${text}\n${line}` : line;
-    }
-
-    await obs.call("SetInputSettings", {
-        inputName: source.value,
-        inputSettings: { text: text, color: 15790320, outline: true, outline_size: 5, outline_color: 0, font: { face: "Calibri", size: 50 } }
-    })
-}
-
-function saveSettings() {
-    localStorage.setItem("obs-data", JSON.stringify({
-        address: address.value,
-        password: password.value,
-        source: source.value
-    }));
-}
-
-function loadSettings() {
-    const data = JSON.parse(localStorage.getItem("obs-data"));
-    if (!data) return;
-
-    address.value = data.address;
-    password.value = data.password;
-    source.value = data.source;
-
-    // This should only run after all the x data is loaded and rendered
-    submit.click();
-}
-
-window.onbeforeunload = function () {
-    if (obs) obs.disconnect();
-}
-
-loadSettings();
