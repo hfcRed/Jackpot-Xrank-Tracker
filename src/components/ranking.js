@@ -32,6 +32,9 @@ async function updateData() {
     dataa = await getRankData();
     if (!dataa) { displayError(); return; };
 
+    const audio = new Audio("/blingblong.mp3");
+    audio.play();
+
     console.log("Data updated");
     drawItems();
     orderItems();
@@ -161,7 +164,6 @@ function prepareFilters() {
     }
 };
 
-// This function will have to run inside a web worker
 function startCountdown() {
     const timer = document.querySelector(".timer");
     const minutesTarget = [8, 23, 38, 53];
@@ -179,20 +181,15 @@ function startCountdown() {
 
     let countdown = setInterval(function () {
         console.log(new Date().getMinutes());
-        if (minutes === 0 && seconds === 0) {
+        if (minutes === 0 && seconds === 0 || minutes < 0) {
             clearInterval(countdown);
             console.log("Countdown finished");
             updateData();
             startCountdown();
         }
         else {
-            if (seconds === 0) {
-                minutes--;
-                seconds = 59;
-            }
-            else {
-                seconds--;
-            }
+            minutes = nextMinute - new Date().getMinutes() - 1;
+            seconds = 59 - new Date().getSeconds();
             timer.textContent = `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
         }
     }, 1000);
