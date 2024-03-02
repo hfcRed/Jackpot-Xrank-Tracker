@@ -18,7 +18,6 @@ window.addEventListener("load", async () => {
     await updateData();
     prepareFilters();
     startCountdown();
-    loadSettings();
 
     spinner.classList.add("hidden");
     spinner.classList.remove("flex");
@@ -28,16 +27,12 @@ window.addEventListener("load", async () => {
 });
 
 async function updateData() {
-    console.log("Updating data");
     dataa = await getRankData();
     if (!dataa) { displayError(); return; };
 
-    const audio = new Audio("/blingblong.mp3");
-    audio.play();
-
-    console.log("Data updated");
-    drawItems();
+    await drawItems();
     orderItems();
+    loadSettings();
 };
 
 async function getRankData() {
@@ -53,7 +48,6 @@ async function getRankData() {
         const data = await response.json();
         if (!data) throw new Error("No data received");
 
-        console.log("Data: " + data);
         return data;
     }
     catch (error) {
@@ -63,7 +57,6 @@ async function getRankData() {
 };
 
 async function drawItems() {
-    console.log("Getting data from GitHub");
     const urls = [
         "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/600/WeaponInfoMain.json",
         "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/600/NamePlateBgInfo.json",
@@ -71,14 +64,12 @@ async function drawItems() {
     ];
     const [weaponData, bannerData, badgeData] = await Promise.all(urls.map(url => fetch(url).then(response => response.json())));
     const mode = document.querySelector(".filters").getAttribute("data-filter") || "zones";
-    console.log("Data received");
 
     // Function will have to check if the new data has more or less players than the current data
     // If it has more, it will add the new players to the list
     // If it has less, it will remove the missing players from the list
     // All players in the new data that are already in the list will have all their data updated
 
-    console.log("Drawing items")
     for (let { node } of data.data.xRanking.xRankingAr.edges) {
         const weaponID = atob(node.weapon.id).toString().split("-")[1];
         const bannerID = atob(node.nameplate.background.id).toString().split("-")[1];
@@ -118,10 +109,8 @@ async function drawItems() {
             splashtag.querySelector(`.splashtag-badge${index + 1}`).setAttribute("href", badge);
         });
 
-        console.log(item);
         list.appendChild(item);
     }
-    console.log("Items drawn");
 };
 
 function orderItems() {
@@ -180,10 +169,8 @@ function startCountdown() {
     let seconds = 0;
 
     let countdown = setInterval(function () {
-        console.log(new Date().getMinutes());
         if (minutes === 0 && seconds === 0 || minutes < 0) {
             clearInterval(countdown);
-            console.log("Countdown finished");
             updateData();
             startCountdown();
         }
