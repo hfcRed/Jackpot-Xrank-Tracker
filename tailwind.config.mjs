@@ -5,7 +5,7 @@ export default {
 		extend: {
 			colors: {
 				textPrimary: '#FEFEFE',
-				textSecondary: '#AFAFB2',
+				textSecondary: '#969699',
 				background: '#1C1E2B',
 				backgroundDark: '#161821',
 				backgroundDarker: '#11121A',
@@ -29,7 +29,8 @@ export default {
 				'1': '1px',
 			},
 			backgroundImage: {
-				shine: 'radial-gradient(500px 100px at 50% 0%, rgba(55, 55, 75, 0.25) 0%, rgba(20, 30, 50, 0) 100%)'
+				shine: 'radial-gradient(500px 100px at 50% 0%, rgba(55, 55, 75, 0.25) 0%, rgba(20, 30, 50, 0) 100%)',
+				shinesmall: 'radial-gradient(400px 50px at 50% 0%, rgba(60, 60, 80, 0.25) 0%, rgba(20, 30, 50, 0) 100%)'
 			}
 		},
 	},

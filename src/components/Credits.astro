@@ -1,0 +1,78 @@
+---
+const credits = [
+  {
+    name: "hfcRed",
+    role: "Frontend",
+    icon: "https://cdn.discordapp.com/avatars/313762200286396416/54f9036ab4ed7b19438f3062480ef396.webp?size=240",
+    socials: {
+      twitter: "https://twitter.com/hfcRedddd",
+      github: "https://github.com/hfcRed",
+    },
+  },
+  {
+    name: "Joy",
+    role: "Backend and data collection",
+    icon: "https://cdn.discordapp.com/avatars/94265880216612864/62ec97739c74ea9f5ed2a8d70344f590?size=1024",
+    socials: {
+      twitter: "https://twitter.com/JoyTheDataNerd",
+      github: "https://github.com/cesaregarza",
+    },
+  },
+  {
+    name: "Leanny",
+    role: "Game data and images",
+    icon: "https://cdn.discordapp.com/avatars/86905636402495488/63ebe534b2ef5db7c0887315f3bbd845?size=1024",
+    socials: {
+      twitter: "https://twitter.com/LeanYoshi",
+      github: "https://github.com/Leanny",
+    },
+  },
+  {
+    name: "NorthWestWind",
+    role: "Splatoon fonts",
+    icon: "https://cdn.discordapp.com/avatars/416227242264363008/89eb969080d23b3afcdf2c90469b9e98?size=1024",
+    socials: {
+      twitch: "https://www.twitch.tv/northwestwindnww",
+      github: "https://github.com/North-West-Wind",
+    },
+  },
+];
+---
+
+<div
+  class="credits bg-backgroundDarker bg-shine border-1 border-border rounded-xl p-4 sm:p-8 flex flex-col gap-4 shadow-lg my-24"
+>
+  <h2
+    class="text-xl text-center font-Blitz-Bold pb-4 mb-4 border-b-1 border-border"
+  >
+    Credits
+  </h2>
+  {
+    credits.map((credit) => (
+      <div>
+        <div class="flex flex-row p-4 bg-backgroundLight rounded-lg justify-between bg-shinesmall">
+          <div>
+            <div class="flex gap-4 justify-between">
+              <div class="flex gap-4 items-center flex-wrap">
+                <img class="rounded-full h-10" src={credit.icon} alt="" />
+                <p class="text-xl">{credit.name}</p>
+              </div>
+            </div>
+            <p class="text-textSecondary mt-2">{credit.role}</p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-4 items-center min-w-fit">
+            {Object.entries(credit.socials).map(([key, value]) => (
+              <a href={value}>
+                <img
+                  class="h-10 hover:-rotate-12 hover:scale-105 transition-all duration-200"
+                  src={`/images/socials/${key}.webp`}
+                  alt=""
+                />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))
+  }
+</div>
