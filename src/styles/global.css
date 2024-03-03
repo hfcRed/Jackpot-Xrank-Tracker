@@ -1,11 +1,11 @@
 @font-face {
   font-family: "Blitz";
-  src: url("/fonts/BlitzMain.otf") format("opentype");
+  src: url("/fonts/BlitzMain.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Blitz-Bold";
-  src: url("/fonts/BlitzBold.otf") format("opentype");
+  src: url("/fonts/BlitzBold.woff2") format("woff2");
 }
 
 * {
