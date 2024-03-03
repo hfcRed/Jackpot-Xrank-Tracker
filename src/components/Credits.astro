@@ -40,7 +40,7 @@ const credits = [
 ---
 
 <div
-  class="credits bg-backgroundDarker bg-shine border-1 border-border rounded-xl p-4 sm:p-8 flex flex-col gap-4 shadow-lg my-24"
+  class="credits bg-backgroundDarker bg-shine border-1 border-border rounded-xl p-4 ssm:p-8 flex flex-col gap-4 shadow-lg my-24"
 >
   <h2
     class="text-xl text-center font-Blitz-Bold pb-4 mb-4 border-b-1 border-border"
@@ -49,28 +49,24 @@ const credits = [
   </h2>
   {
     credits.map((credit) => (
-      <div>
-        <div class="flex flex-row p-4 bg-backgroundLight rounded-lg justify-between bg-shinesmall">
-          <div>
-            <div class="flex gap-4 justify-between">
-              <div class="flex gap-4 items-center flex-wrap">
-                <img class="rounded-full h-10" src={credit.icon} alt="" />
-                <p class="text-xl">{credit.name}</p>
-              </div>
-            </div>
-            <p class="text-textSecondary mt-2">{credit.role}</p>
+      <div class="flex flex-col ssm:flex-row p-4 gap-4 bg-backgroundLight rounded-lg justify-between bg-shinesmall items-center">
+        <div class="flex flex-col items-center ssm:items-start">
+          <div class="flex gap-4 items-center">
+            <img class="rounded-full h-10" src={credit.icon} alt="" />
+            <p class="text-xl">{credit.name}</p>
           </div>
-          <div class="flex flex-col sm:flex-row gap-4 items-center min-w-fit">
-            {Object.entries(credit.socials).map(([key, value]) => (
-              <a href={value}>
-                <img
-                  class="h-10 hover:-rotate-12 hover:scale-105 transition-all duration-200"
-                  src={`/images/socials/${key}.webp`}
-                  alt=""
-                />
-              </a>
-            ))}
-          </div>
+          <p class="text-textSecondary mt-2">{credit.role}</p>
+        </div>
+        <div class="flex gap-4 items-center">
+          {Object.entries(credit.socials).map(([key, value]) => (
+            <a href={value} target="_blank">
+              <img
+                class="h-10 hover:-rotate-12 hover:scale-105 transition-all duration-200"
+                src={`/images/socials/${key}.webp`}
+                alt=""
+              />
+            </a>
+          ))}
         </div>
       </div>
     ))
