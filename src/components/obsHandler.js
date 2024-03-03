@@ -11,7 +11,6 @@ submit.onclick = async function () {
     saveSettings();
 
     if (!address.value || !password.value || !source.value) return;
-    if (obs) obs.disconnect();
 
     try {
         obs = new OBSWebSocket();
@@ -19,24 +18,40 @@ submit.onclick = async function () {
     }
     catch (error) {
         console.error(error);
+        obs = null;
         return;
     }
 
+    updateText();
+}
+
+export async function updateText() {
+    if (!obs) return;
+
     const names = document.querySelectorAll(".splashtag-name");
     const powers = document.querySelectorAll(".item-power");
-    let text;
+    const timer = document.querySelector(".timer");
+    const mode = document.querySelector(".filters").getAttribute("data-filter") || "splat-zones";
+
+    let text = mode.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
 
     for (let index = 0; index < (names.length - 1); index++) {
-        const line = `${powers[index].textContent}\n${names[index].textContent}\n`;
+        const line = `\n${powers[index].textContent}\n${names[index].textContent}`;
         text = text ? `${text}\n${line}` : line;
     }
 
-    text = `${text}\njackpot.ink`
+    text = `${text}\n\n${parseInt(timer.textContent.split(":")[0]) + 1} minutes`;
 
-    await obs.call("SetInputSettings", {
-        inputName: source.value,
-        inputSettings: { text: text, color: 15790320, outline: true, outline_size: 5, outline_color: 0, font: { face: "Calibri", size: 50 } }
-    })
+    try {
+        await obs.call("SetInputSettings", {
+            inputName: source.value,
+            inputSettings: { text: text }
+        });
+    }
+    catch (error) {
+        console.error(error);
+        obs = null;
+    }
 }
 
 function saveSettings() {

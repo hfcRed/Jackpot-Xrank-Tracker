@@ -1,9 +1,8 @@
 import { Sortable } from 'sortablejs/modular/sortable.core.esm.js';
-import data from '../response.json';
-import { loadSettings } from './obsHandler.js';
+import { loadSettings, updateText } from './obsHandler.js';
 
 let spinner;
-let dataa;
+let data;
 let list;
 let sortableList;
 
@@ -17,6 +16,7 @@ window.addEventListener("load", async () => {
 
     await updateData();
     prepareFilters();
+    loadSettings();
 
     spinner.classList.add("hidden");
     spinner.classList.remove("flex");
@@ -26,19 +26,20 @@ window.addEventListener("load", async () => {
 });
 
 async function updateData() {
-    dataa = await getRankData();
-    if (!dataa) { displayError(); return; };
+    data = await getRankData();
+    startCountdown();
+
+    if (!data) { displayError(); return; };
 
     await drawItems();
     orderItems();
-    loadSettings();
-    startCountdown();
+    updateText();
 };
 
 async function getRankData() {
     try {
         const timeoutPromise = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("Timeout")), 15000)
+            setTimeout(() => reject(new Error("Timeout")), 60000)
         );
         const dataPromise = fetch("https://splat.top/jackpot");
 
@@ -48,7 +49,7 @@ async function getRankData() {
         const data = await response.json();
         if (!data) throw new Error("No data received");
 
-        return data;
+        return Object.entries(data);
     }
     catch (error) {
         console.error(error);
@@ -57,24 +58,23 @@ async function getRankData() {
 };
 
 async function drawItems() {
+    const version = "700";
     const urls = [
-        "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/600/WeaponInfoMain.json",
-        "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/600/NamePlateBgInfo.json",
-        "https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/600/BadgeInfo.json"
+        `https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/${version}/WeaponInfoMain.json`,
+        `https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/${version}/NamePlateBgInfo.json`,
+        `https://raw.githubusercontent.com/Leanny/splat3/main/data/mush/${version}/BadgeInfo.json`,
     ];
     const [weaponData, bannerData, badgeData] = await Promise.all(urls.map(url => fetch(url).then(response => response.json())));
-    const mode = document.querySelector(".filters").getAttribute("data-filter") || "zones";
+    const mode = document.querySelector(".filters").getAttribute("data-filter") || "splat-zones";
+    const modeData = data.find(data => data[0].split(" ").join("-").toLowerCase() == mode)[1];
+    const playerIDs = modeData.map(player => player.id);
 
-    // Function will have to check if the new data has more or less players than the current data
-    // If it has more, it will add the new players to the list
-    // If it has less, it will remove the missing players from the list
-    // All players in the new data that are already in the list will have all their data updated
+    for (let player of modeData) {
+        const { id, name, name_id, byname, x_power, weapon_id, background_image, background_text_color: textColor, badges } = player;
 
-    for (let { node } of data.data.xRanking.xRankingAr.edges) {
-        const weaponID = atob(node.weapon.id).toString().split("-")[1];
-        const bannerID = atob(node.nameplate.background.id).toString().split("-")[1];
-        const badgeIDs = node.nameplate.badges.map(badge => atob(badge?.id ? badge.id : null).toString().split("-")[1]);
-        const { name, byname, xPower, nameId, nameplate: { background: { textColor } } } = node;
+        const weaponID = atob(weapon_id).toString().split("-")[1];
+        const bannerID = atob(background_image).toString().split("-")[1];
+        const badgeIDs = badges.map(badge => atob(badge).toString().split("-")[1]);
 
         const weapon = weaponData.find(weapon => weapon.Id == weaponID);
         const weaponLink = weapon ? `https://raw.githubusercontent.com/Leanny/splat3/main/images/weapon_flat/Path_Wst_${weapon.__RowId}.webp` : null;
@@ -89,13 +89,21 @@ async function drawItems() {
             return badge ? `https://raw.githubusercontent.com/Leanny/splat3/main/images/badge/Badge_${badge.Name}.webp` : null;
         });
 
-        const item = document.querySelector(".item-template").cloneNode(true);
-        item.classList.remove("item-template", "hidden");
-        item.classList.add("grid", `item-${Array.from(list.children).length + 1}`);
+        const newPlayer = document.getElementById(id) ? false : true;
 
-        item.querySelector(".item-power").textContent = xPower;
+        let item;
+        if (newPlayer) {
+            item = document.querySelector(".item-template").cloneNode(true);
+            item.classList.remove("item-template", "hidden");
+            item.classList.add("grid", `item-${Array.from(list.children).length + 1}`);
+            item.id = id;
+        }
+        else {
+            item = document.getElementById(id);
+        }
+
+        item.querySelector(".item-power").textContent = x_power;
         item.querySelector(".item-image").src = weaponLink;
-
 
         const splashtag = item.querySelector(".splashtag");
         splashtag.style.color = `rgb(${textColor.r * 255}, ${textColor.g * 255}, ${textColor.b * 255})`;
@@ -103,21 +111,23 @@ async function drawItems() {
         splashtag.querySelector(".splashtag-banner").setAttribute("href", bannerLink);
         splashtag.querySelector(".splashtag-title").textContent = byname;
         splashtag.querySelector(".splashtag-name").textContent = name;
-        splashtag.querySelector(".splashtag-id").textContent = `#${nameId}`;
+        splashtag.querySelector(".splashtag-id").textContent = `#${name_id}`;
 
         badgeLinks.forEach((badge, index) => {
             splashtag.querySelector(`.splashtag-badge${index + 1}`).setAttribute("href", badge);
         });
 
-        list.appendChild(item);
+        if (newPlayer) list.appendChild(item);
+    }
+
+    for (let player of list.children) {
+        if (!playerIDs.includes(player.id)) {
+            list.removeChild(player);
+        }
     }
 };
 
 function orderItems() {
-    for (let power of list.querySelectorAll(".item-power")) {
-        power.textContent = Math.floor(Math.random() * 10000);
-    }
-
     const order = sortableList.toArray().map((item, index) => ({
         id: item,
         power: parseInt(list.querySelectorAll(".item-power")[index].textContent)
@@ -138,7 +148,7 @@ function prepareFilters() {
     filters[0].classList.add("bg-backgroundLighter");
 
     for (let button of filters) {
-        button.onclick = function () {
+        button.onclick = async function () {
             if (button.classList.contains("bg-backgroundLighter")) return;
 
             for (let button of filters) {
@@ -148,7 +158,9 @@ function prepareFilters() {
             button.classList.add("bg-backgroundLighter");
             button.parentElement.setAttribute("data-filter", button.classList[0]);
 
-            drawItems();
+            await drawItems();
+            orderItems();
+            updateText();
         }
     }
 };
@@ -175,6 +187,8 @@ function startCountdown() {
         seconds = 59 - currentSecond;
         timer.textContent = `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
+        updateText();
+
         if (minutes < 0) {
             clearInterval(countdown);
             updateData();
@@ -186,5 +200,5 @@ function startCountdown() {
 const button = document.querySelector(".button");
 
 button.onclick = function () {
-    orderItems();
+    updateData();
 }
