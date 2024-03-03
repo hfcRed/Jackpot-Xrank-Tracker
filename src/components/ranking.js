@@ -1,5 +1,4 @@
 import { Sortable } from 'sortablejs/modular/sortable.core.esm.js';
-// import { loadSettings, updateText } from './obsHandler.js';
 
 let spinner;
 let data;
@@ -16,7 +15,6 @@ window.addEventListener("load", async () => {
 
     await updateData();
     prepareFilters();
-    // loadSettings();
 
     spinner.classList.add("hidden");
     spinner.classList.remove("flex");
@@ -33,7 +31,6 @@ async function updateData() {
 
     await drawItems();
     orderItems();
-    // updateText();
 };
 
 async function getRankData() {
@@ -160,7 +157,6 @@ function prepareFilters() {
 
             await drawItems();
             orderItems();
-            // updateText();
         }
     }
 };
@@ -187,8 +183,6 @@ function startCountdown() {
         seconds = 59 - currentSecond;
         timer.textContent = `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
-        // updateText();
-
         if (minutes < 0) {
             clearInterval(countdown);
             updateData();
@@ -196,9 +190,3 @@ function startCountdown() {
         };
     }, 1000);
 };
-
-const button = document.querySelector(".button");
-
-button.onclick = function () {
-    updateData();
-}

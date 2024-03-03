@@ -29,8 +29,9 @@ export default {
 				'1': '1px',
 			},
 			backgroundImage: {
-				shine: 'radial-gradient(500px 100px at 50% 0%, rgba(55, 55, 75, 0.25) 0%, rgba(20, 30, 50, 0) 100%)',
-				shinesmall: 'radial-gradient(400px 50px at 50% 0%, rgba(60, 60, 80, 0.25) 0%, rgba(20, 30, 50, 0) 100%)'
+				shine: 'radial-gradient(500px 100px at 50% 0%, rgba(55, 55, 75, 0.35) 0%, rgba(20, 30, 50, 0) 100%)',
+				shinesmall: 'radial-gradient(400px 50px at 50% 0%, rgba(60, 60, 80, 0.25) 0%, rgba(20, 30, 50, 0) 100%)',
+				shinebig: 'radial-gradient(600px 150px at 50% 0%, rgba(70, 80, 100, 0.3) 0%, rgba(20, 30, 50, 0) 100%)'
 			}
 		},
 	},
