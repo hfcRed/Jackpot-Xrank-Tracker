@@ -4,6 +4,7 @@ let spinner;
 let data;
 let list;
 let sortableList;
+let countdown;
 
 window.addEventListener("load", async () => {
     spinner = document.querySelector(".spinner");
@@ -15,17 +16,13 @@ window.addEventListener("load", async () => {
 
     await updateData();
     prepareFilters();
-
-    spinner.classList.add("hidden");
-    spinner.classList.remove("flex");
-
-    list.classList.remove("hidden");
-    list.classList.add("flex");
 });
 
 async function updateData() {
     data = await getRankData();
+    clearInterval(countdown);
     startCountdown();
+    hideSpinner();
 
     if (!data) { displayError(); return; };
 
@@ -52,6 +49,22 @@ async function getRankData() {
         console.error(error);
         return null;
     }
+};
+
+function showSpinner() {
+    spinner.classList.remove("hidden");
+    spinner.classList.add("flex");
+
+    list.classList.add("hidden");
+    list.classList.remove("flex");
+};
+
+function hideSpinner() {
+    spinner.classList.add("hidden");
+    spinner.classList.remove("flex");
+
+    list.classList.remove("hidden");
+    list.classList.add("flex");
 };
 
 async function drawItems() {
@@ -160,8 +173,11 @@ function prepareFilters() {
             button.classList.add("bg-backgroundLighter");
             button.parentElement.setAttribute("data-filter", button.classList[0]);
 
-            if (!data) updateData();
-            else {
+            if (!data && spinner.classList.contains("hidden")) {
+                showSpinner();
+                updateData();
+            }
+            else if (spinner.classList.contains("hidden")) {
                 await drawItems();
                 orderItems();
             }
@@ -177,12 +193,11 @@ function startCountdown() {
     let minutes;
     let seconds;
 
-    let countdown = setInterval(function () {
+    countdown = setInterval(function () {
         const currentMinute = new Date().getMinutes();
         const currentSecond = new Date().getSeconds();
 
         if (minutes === 0 && seconds === 0) {
-            clearInterval(countdown);
             updateData();
             return;
         };
@@ -192,7 +207,6 @@ function startCountdown() {
         timer.textContent = `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
         if (minutes < 0 || minutes > 20) {
-            clearInterval(countdown);
             updateData();
             return;
         };
