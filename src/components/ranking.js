@@ -117,10 +117,15 @@ async function drawItems() {
         if (newPlayer) list.appendChild(item);
     }
 
+    let childrenToRemove = [];
     for (let player of list.children) {
         if (!playerIDs.includes(player.id)) {
-            list.removeChild(player);
+            childrenToRemove.push(player);
         }
+    }
+
+    for (let child of childrenToRemove) {
+        child.remove();
     }
 };
 
