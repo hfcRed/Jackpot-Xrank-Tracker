@@ -163,7 +163,7 @@ function prepareFilters() {
 
 function startCountdown() {
     const timer = document.querySelector(".timer");
-    const minutesTarget = [8, 23, 38, 53];
+    const minutesTarget = [10, 25, 40, 55];
     const nextMinute = minutesTarget.find(minute => minute > new Date().getMinutes()) || minutesTarget[0];
 
     let minutes;
@@ -183,7 +183,7 @@ function startCountdown() {
         seconds = 59 - currentSecond;
         timer.textContent = `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
-        if (minutes < 0) {
+        if (minutes < 0 || minutes > 20) {
             clearInterval(countdown);
             updateData();
             return;
