@@ -1,0 +1,70 @@
+---
+const members = [
+  {
+    name: "Leafi",
+    icon: "https://cdn.discordapp.com/avatars/114889120379043843/c1f430c7fc82dde285c4229f6b2758ad.webp?size=240",
+    socials: {
+      youtube: "https://www.youtube.com/channel/UCObOP_107KEEb9HibWtMRhA",
+      twitch: "https://www.twitch.tv/777_leafi",
+      twitter: "https://twitter.com/Leafiiii",
+    },
+  },
+  {
+    name: "Jared",
+    icon: "https://cdn.discordapp.com/avatars/275491864344395776/2341f664d3adf39918009cf8b5c65e32.webp?size=240",
+    socials: {
+      youtube: "https://www.youtube.com/channel/UCRv4Yd0SWCidAXGZf-bzIKw",
+      twitch: "https://www.twitch.tv/777_jared",
+      twitter: "https://twitter.com/_isjared_",
+    },
+  },
+  {
+    name: "Madness",
+    icon: "https://cdn.discordapp.com/avatars/383774228937179136/b550107ef8b5403fe08da02676d12352.webp?size=240",
+    socials: {
+      twitch: "https://www.twitch.tv/madnesssvn",
+      twitter: "https://twitter.com/MadnessSVN",
+    },
+  },
+  {
+    name: ".q",
+    icon: "https://cdn.discordapp.com/avatars/266716798945067010/92966ce63bb148b81ffe1590a30dbb21?size=240",
+    socials: {
+      twitch: "https://www.twitch.tv/dotqueue",
+      twitter: "https://twitter.com/Dotqueue",
+    },
+  },
+];
+---
+
+<section
+  class="members bg-backgroundDarker bg-shine border-1 border-border rounded-xl p-4 ssm:p-8 flex flex-col gap-4 shadow-lg my-20"
+>
+  <h2 class="text-xl text-center font-Blitz-Bold pb-4 border-b-1 border-border">
+    Members
+  </h2>
+  <div class="ssm:px-4 my-4">
+    <img class="rounded-lg" src="/images/banner.webp" alt="" />
+  </div>
+  {
+    members.map((credit) => (
+      <div class="flex flex-col ssm:flex-row p-4 gap-4 bg-backgroundLight rounded-lg justify-between bg-shinesmall items-center">
+        <div class="flex gap-4 items-center">
+          <img class="rounded-full h-10" src={credit.icon} alt="" />
+          <p class="text-xl">{credit.name}</p>
+        </div>
+        <div class="flex gap-4 items-center">
+          {Object.entries(credit.socials).map(([key, value]) => (
+            <a href={value} target="_blank">
+              <img
+                class="h-10 hover:-rotate-12 hover:scale-105 transition-all duration-200"
+                src={`/images/socials/${key}.webp`}
+                alt=""
+              />
+            </a>
+          ))}
+        </div>
+      </div>
+    ))
+  }
+</section>

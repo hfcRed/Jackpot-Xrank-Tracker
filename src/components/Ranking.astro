@@ -1,0 +1,58 @@
+---
+import ItemTemplate from "./ItemTemplate.astro";
+import RankingFilter from "./RankingFilter.astro";
+---
+
+<div class="crown mb-6 flex justify-center items-center">
+  <img class="h-48 float" src="/images/crown.webp" alt="" />
+</div>
+<ul class="list flex-col gap-8 hidden"></ul>
+<div class="spinner flex justify-center items-center py-64">
+  <div class="loading"></div>
+</div>
+<RankingFilter />
+<ItemTemplate />
+
+<style is:global>
+  .loading {
+    mask: url("/images/loading.webp") no-repeat center;
+    width: 10rem;
+    height: 10rem;
+    animation: loading 1.07s linear infinite;
+  }
+
+  @keyframes loading {
+    0% {
+      background-color: pink;
+    }
+    40% {
+      background-color: pink;
+    }
+    50% {
+      background-color: cyan;
+    }
+    90% {
+      background-color: cyan;
+    }
+    100% {
+      background-color: pink;
+    }
+  }
+  .float {
+    animation: float 5s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+</style>
+
+<script src="./ranking.js"></script>

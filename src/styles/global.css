@@ -1,0 +1,50 @@
+@font-face {
+  font-family: "Blitz";
+  src: url("/fonts/BlitzMain.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Blitz-Bold";
+  src: url("/fonts/BlitzBold.woff2") format("woff2");
+}
+
+* {
+  min-width: 0;
+}
+
+*:focus-visible[type="text"] {
+  outline: none;
+}
+
+*:focus-visible[type="password"] {
+  outline: none;
+}
+
+html {
+  --scrollbar-track: rgb(45 45 65);
+  --scrollbar-thumb: rgb(80 65 90);
+}
+
+html::-webkit-scrollbar {
+  width: 0.6rem;
+  height: 0.6rem;
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 1rem;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+html {
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: thin;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}

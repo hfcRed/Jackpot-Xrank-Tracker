@@ -1,0 +1,46 @@
+---
+
+---
+
+<section
+  class="obs-form bg-backgroundDarker bg-shine border-1 border-border rounded-xl p-8 flex flex-col gap-8 shadow-lg my-24"
+>
+  <h2 class="text-xl text-center font-Blitz-Bold pb-4 border-b-1 border-border">
+    OBS Integration
+  </h2>
+  <div class="flex flex-col sm:flex-row gap-4">
+    <div class="flex flex-col grow">
+      <p class="text-sm mb-1 pl-1 text-textSecondary">Address</p>
+      <input
+        class="bg-backgroundLight focus:bg-backgroundLighter transition-colors duration-200 rounded-lg py-2 px-4"
+        id="obs-address"
+        type="text"
+        value="ws://127.0.0.1:4455"
+      />
+    </div>
+    <div class="flex flex-col grow">
+      <p class="text-sm mb-1 pl-1 text-textSecondary">Password</p>
+      <input
+        class="bg-backgroundLight focus:bg-backgroundLighter transition-colors duration-200 rounded-lg py-2 px-4"
+        id="obs-password"
+        type="password"
+        value=""
+      />
+    </div>
+    <div class="flex flex-col grow">
+      <p class="text-sm mb-1 pl-1 text-textSecondary">Source</p>
+      <input
+        class="bg-backgroundLight focus:bg-backgroundLighter transition-colors duration-200 rounded-lg py-2 px-4"
+        id="obs-source"
+        type="text"
+        value="Text (GDI+)"
+      />
+    </div>
+  </div>
+  <button
+    class="bg-backgroundLight hover:bg-backgroundLighter transition-colors duration-200 rounded-lg py-2 px-4 border-1 border-border"
+    id="obs-submit">Connect</button
+  >
+</section>
+
+<script src="./obsHandler.js"></script>

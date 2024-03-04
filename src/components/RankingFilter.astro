@@ -1,0 +1,81 @@
+---
+const filters = [
+  {
+    name: "splat-zones",
+    icon: "/images/zones.webp",
+  },
+  {
+    name: "tower-control",
+    icon: "/images/tower.webp",
+  },
+  {
+    name: "rainmaker",
+    icon: "/images/rainmaker.webp",
+  },
+  {
+    name: "clam-blitz",
+    icon: "/images/clam.webp",
+  },
+];
+---
+
+<div
+  class="options w-full bg-backgroundDarker flex flex-col sm:flex-row justify-between items-center py-4 px-8 gap-4 rounded-xl my-8 shadow-lg"
+>
+  <div class="filters flex justify-center gap-4">
+    {
+      filters.map((filter) => (
+        <button
+          class:list={[
+            `${filter.name}`,
+            "w-10 h-10 hover:-rotate-12 hover:scale-105 transition-all duration-200 border-2 border-transparent hover:border-backgroundLighter rounded-lg bg-backgroundLight p-1",
+          ]}
+        >
+          <img src={filter.icon} alt={filter.name} />
+        </button>
+      ))
+    }
+  </div>
+  <p class="countdown">
+    New data: <span class="timer w-14 inline-block text-end">00:00</span>
+  </p>
+</div>
+<div class="link -mt-4 justify-center text-textSecondary hidden">
+  <p class="bg-backgroundDarker py-2 px-4 rounded-lg shadow-lg">
+    splat.top.jackpot
+  </p>
+</div>
+
+<style>
+  .item::before {
+    position: absolute;
+    display: inline-block;
+    content: "";
+    background-color: inherit;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    height: 100%;
+    width: 66px;
+    top: 0;
+    left: -66px;
+    mask: url("/images/paint-right.webp") repeat-y;
+    -webkit-mask: url("/images/paint-right.webp") repeat-y;
+    mask-size: 100% 200%;
+  }
+
+  .item::after {
+    position: absolute;
+    display: inline-block;
+    content: "";
+    background-color: inherit;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    height: 100%;
+    width: 66px;
+    top: 0;
+    right: -66px;
+    mask: url("/images/paint-left.webp") repeat-y;
+    -webkit-mask: url("/images/paint-left.webp") repeat-y;
+    mask-size: 100% 200%;
+  }
+</style>

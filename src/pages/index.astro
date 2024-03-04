@@ -1,0 +1,58 @@
+---
+import Linechart from "../components/Linechart.astro";
+import Ranking from "../components/Ranking.astro";
+import About from "../components/Members.astro";
+import Credits from "../components/Credits.astro";
+import "../styles/global.css";
+
+const pageTitle = "Jackpot Tracker";
+const pageDescription =
+  "See the position of Jackpot team members on the Top 500 X-Rank leaderboards";
+---
+
+<html class="overflow-x-hidden" lang="en">
+  <head>
+    <title>{pageTitle}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta charset="utf-8" />
+    <meta name="description" content={pageDescription} />
+    <meta
+      name="keywords"
+      content="splatoon, jackpot, x rank, x power, tracker, race"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content="" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="" />
+    <meta property="twitter:url" content="" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content="" />
+  </head>
+  <body
+    class="bg-background overflow-x-hidden text-textPrimary min-h-screen w-full break-words font-Blitz bg-shinebig"
+  >
+    <main class="px-4 sm:px-10 mx-auto w-full max-w-[45rem]">
+      <header class="head flex flex-col items-center text-center">
+        <img class="logo w-64 h-64" src="/images/logo.svg" alt="" />
+        <h1
+          class="font-Blitz-Bold text-6xl -mt-12 mb-12 bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 to-cyan-300"
+        >
+          X-Rank Tracker
+        </h1>
+      </header>
+      <Ranking />
+      <Linechart />
+      <About />
+      <Credits />
+    </main>
+  </body>
+</html>
