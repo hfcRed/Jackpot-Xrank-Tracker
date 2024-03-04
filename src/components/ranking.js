@@ -160,8 +160,11 @@ function prepareFilters() {
             button.classList.add("bg-backgroundLighter");
             button.parentElement.setAttribute("data-filter", button.classList[0]);
 
-            await drawItems();
-            orderItems();
+            if (!data) updateData();
+            else {
+                await drawItems();
+                orderItems();
+            }
         }
     }
 };
