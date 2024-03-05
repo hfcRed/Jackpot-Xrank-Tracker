@@ -48,19 +48,7 @@ const jared = {
     ]
 };
 
-const ren = {
-    name: 'Ren',
-    color: '#6AF9F2',
-    stats: [
-        { week: 1, power: 3300 },
-        { week: 2, power: 3400 },
-        { week: 3, power: 3200 },
-        { week: 4, power: 3500 },
-        { week: 5, power: 3400 }
-    ]
-};
-
-const data = [leafi, madness, q, jared, ren];
+const data = [leafi, madness, q, jared];
 
 
 new Chart(
@@ -72,8 +60,6 @@ new Chart(
             datasets: data.map((player) => ({
                 label: player.name,
                 data: player.stats.map(item => item.power),
-                fill: false,
-                backgroundColor: "#FFFFFF",
                 borderColor: player.color,
             }))
         },
@@ -81,17 +67,54 @@ new Chart(
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                title: {
-                    display: true,
-                    text: 'Power Levels'
-                },
                 tooltip: {
                     mode: 'index',
                     intersect: false,
+                    backgroundColor: '#161821',
+                    titleAlign: 'center',
+                    padding: 10,
+                    caretPadding: 15,
+                    caretSize: 10,
+                    usePointStyle: true,
+                    borderColor: '#393C4C',
+                    borderWidth: 1,
                     itemSort: (a, b) => b.parsed.y - a.parsed.y,
                 },
+                legend: {
+                    position: 'top',
+                    labels: {
+                        padding: 20,
+                        usePointStyle: true,
+                        useBorderRadius: true,
+                        fillStyle: 'black',
+                    }
+                }
             },
-            lineTension: 0.25,
+            elements: {
+                point: {
+                    pointStyle: 'rectRounded',
+                    backgroundColor: '#1C1E2B',
+                    borderWidth: 2,
+                    radius: 4,
+                },
+                line: {
+                    tension: 0.3,
+                    borderWidth: 2,
+                    fill: false,
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                    },
+                },
+                y: {
+                    grid: {
+                        display: false,
+                    },
+                }
+            }
         },
     }
 );
