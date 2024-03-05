@@ -206,7 +206,7 @@ function startCountdown() {
         seconds = 59 - currentSecond;
         timer.textContent = `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
-        if (minutes < 0 || minutes > 20) {
+        if (minutes < 0 || minutes > 15) {
             updateData();
             return;
         };
