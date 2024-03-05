@@ -22,12 +22,12 @@ async function updateData() {
     data = await getRankData();
     clearInterval(countdown);
     startCountdown();
-    hideSpinner();
 
     if (!data) { displayError(); return; };
 
     await drawItems();
     orderItems();
+    hideSpinner();
 };
 
 async function getRankData() {
@@ -157,6 +157,8 @@ function orderItems() {
 };
 
 function displayError() {
+    hideSpinner();
+
     const error = document.querySelector(".error");
     const errorButton = error.querySelector(".error-button");
 
