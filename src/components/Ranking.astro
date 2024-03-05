@@ -7,8 +7,21 @@ import RankingFilter from "./RankingFilter.astro";
   <img class="h-48 float" src="/images/crown.webp" alt="" />
 </div>
 <ul class="list flex-col gap-8 hidden"></ul>
-<div class="spinner flex justify-center items-center py-64">
+<div class="spinner flex justify-center items-center py-32 sm:py-64">
   <div class="loading"></div>
+</div>
+<div
+  class="error hidden flex-col justify-center items-center py-32 sm:py-64 gap-4 text-center"
+>
+  <h2 class="text-xl font-Blitz-Bold">Something went wrong...</h2>
+  <p class="text-textSecondary">
+    An error occurred while fetching the data, try again later
+  </p>
+  <button
+    class="error-button transition-all duration-200 border-1 border-border rounded-lg bg-backgroundLight hover:bg-backgroundLighter px-4 py-2"
+  >
+    Retry
+  </button>
 </div>
 <RankingFilter />
 <ItemTemplate />

@@ -156,7 +156,19 @@ function orderItems() {
     }
 };
 
-function displayError() { };
+function displayError() {
+    const error = document.querySelector(".error");
+    const errorButton = error.querySelector(".error-button");
+
+    error.classList.remove("hidden");
+    error.classList.add("flex");
+
+    errorButton.onclick = function () {
+        error.classList.add("hidden");
+        showSpinner();
+        updateData();
+    }
+};
 
 function prepareFilters() {
     const filters = document.querySelector(".filters").children;
