@@ -4,6 +4,7 @@ let spinner;
 let data;
 let list;
 let sortableList;
+let countdown;
 
 window.addEventListener("load", async () => {
     spinner = document.querySelector(".spinner");
@@ -15,17 +16,13 @@ window.addEventListener("load", async () => {
 
     await updateData();
     prepareFilters();
-
-    spinner.classList.add("hidden");
-    spinner.classList.remove("flex");
-
-    list.classList.remove("hidden");
-    list.classList.add("flex");
 });
 
 async function updateData() {
     data = await getRankData();
+    clearInterval(countdown);
     startCountdown();
+    hideSpinner();
 
     if (!data) { displayError(); return; };
 
@@ -52,6 +49,22 @@ async function getRankData() {
         console.error(error);
         return null;
     }
+};
+
+function showSpinner() {
+    spinner.classList.remove("hidden");
+    spinner.classList.add("flex");
+
+    list.classList.add("hidden");
+    list.classList.remove("flex");
+};
+
+function hideSpinner() {
+    spinner.classList.add("hidden");
+    spinner.classList.remove("flex");
+
+    list.classList.remove("hidden");
+    list.classList.add("flex");
 };
 
 async function drawItems() {
@@ -117,10 +130,15 @@ async function drawItems() {
         if (newPlayer) list.appendChild(item);
     }
 
+    let childrenToRemove = [];
     for (let player of list.children) {
         if (!playerIDs.includes(player.id)) {
-            list.removeChild(player);
+            childrenToRemove.push(player);
         }
+    }
+
+    for (let child of childrenToRemove) {
+        child.remove();
     }
 };
 
@@ -138,7 +156,19 @@ function orderItems() {
     }
 };
 
-function displayError() { };
+function displayError() {
+    const error = document.querySelector(".error");
+    const errorButton = error.querySelector(".error-button");
+
+    error.classList.remove("hidden");
+    error.classList.add("flex");
+
+    errorButton.onclick = function () {
+        error.classList.add("hidden");
+        showSpinner();
+        updateData();
+    }
+};
 
 function prepareFilters() {
     const filters = document.querySelector(".filters").children;
@@ -155,26 +185,31 @@ function prepareFilters() {
             button.classList.add("bg-backgroundLighter");
             button.parentElement.setAttribute("data-filter", button.classList[0]);
 
-            await drawItems();
-            orderItems();
+            if (!data && spinner.classList.contains("hidden")) {
+                showSpinner();
+                updateData();
+            }
+            else if (spinner.classList.contains("hidden")) {
+                await drawItems();
+                orderItems();
+            }
         }
     }
 };
 
 function startCountdown() {
     const timer = document.querySelector(".timer");
-    const minutesTarget = [8, 23, 38, 53];
+    const minutesTarget = [10, 25, 40, 55];
     const nextMinute = minutesTarget.find(minute => minute > new Date().getMinutes()) || minutesTarget[0];
 
     let minutes;
     let seconds;
 
-    let countdown = setInterval(function () {
+    countdown = setInterval(function () {
         const currentMinute = new Date().getMinutes();
         const currentSecond = new Date().getSeconds();
 
         if (minutes === 0 && seconds === 0) {
-            clearInterval(countdown);
             updateData();
             return;
         };
@@ -183,8 +218,7 @@ function startCountdown() {
         seconds = 59 - currentSecond;
         timer.textContent = `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
-        if (minutes < 0) {
-            clearInterval(countdown);
+        if (minutes < 0 || minutes > 15) {
             updateData();
             return;
         };
