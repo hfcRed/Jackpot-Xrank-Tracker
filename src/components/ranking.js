@@ -99,18 +99,18 @@ async function drawItems() {
         }
 
         item.querySelector(".item-power").textContent = x_power;
-        item.querySelector(".item-image").src = weaponLink;
+        if (item.querySelector(".item-image").src != weaponLink) item.querySelector(".item-image").src = weaponLink;
 
         const splashtag = item.querySelector(".splashtag");
         splashtag.style.color = `rgb(${textColor.r * 255}, ${textColor.g * 255}, ${textColor.b * 255})`;
 
-        splashtag.querySelector(".splashtag-banner").setAttribute("href", bannerLink);
+        if (splashtag.querySelector(".splashtag-banner").getAttribute("href") != bannerLink) splashtag.querySelector(".splashtag-banner").setAttribute("href", bannerLink);
         splashtag.querySelector(".splashtag-title").textContent = byname;
         splashtag.querySelector(".splashtag-name").textContent = name;
         splashtag.querySelector(".splashtag-id").textContent = `#${name_id}`;
 
         badgeLinks.forEach((badge, index) => {
-            splashtag.querySelector(`.splashtag-badge${index + 1}`).setAttribute("href", badge);
+            if (splashtag.querySelector(`.splashtag-badge${index + 1}`).getAttribute("href") != badge) splashtag.querySelector(`.splashtag-badge${index + 1}`).setAttribute("href", badge);
         });
 
         if (newPlayer) list.appendChild(item);
