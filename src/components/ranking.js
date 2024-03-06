@@ -1,6 +1,7 @@
 import { Sortable } from 'sortablejs/modular/sortable.core.esm.js';
 
 let spinner;
+let error;
 let data;
 let list;
 let sortableList;
@@ -8,6 +9,7 @@ let countdown;
 
 window.addEventListener("load", async () => {
     spinner = document.querySelector(".spinner");
+    error = document.querySelector(".error");
     list = document.querySelector(".list");
     sortableList = new Sortable.create(list, {
         animation: 1000,
@@ -49,22 +51,6 @@ async function getRankData() {
         console.error(error);
         return null;
     }
-};
-
-function showSpinner() {
-    spinner.classList.remove("hidden");
-    spinner.classList.add("flex");
-
-    list.classList.add("hidden");
-    list.classList.remove("flex");
-};
-
-function hideSpinner() {
-    spinner.classList.add("hidden");
-    spinner.classList.remove("flex");
-
-    list.classList.remove("hidden");
-    list.classList.add("flex");
 };
 
 async function drawItems() {
@@ -156,22 +142,6 @@ function orderItems() {
     }
 };
 
-function displayError() {
-    hideSpinner();
-
-    const error = document.querySelector(".error");
-    const errorButton = error.querySelector(".error-button");
-
-    error.classList.remove("hidden");
-    error.classList.add("flex");
-
-    errorButton.onclick = function () {
-        error.classList.add("hidden");
-        showSpinner();
-        updateData();
-    }
-};
-
 function prepareFilters() {
     const filters = document.querySelector(".filters").children;
     filters[0].classList.add("bg-backgroundLighter");
@@ -225,4 +195,40 @@ function startCountdown() {
             return;
         };
     }, 1000);
+};
+
+function showSpinner() {
+    spinner.classList.remove("hidden");
+    spinner.classList.add("flex");
+
+    list.classList.add("hidden");
+    list.classList.remove("flex");
+
+    error.classList.add("hidden");
+    error.classList.remove("flex");
+};
+
+function hideSpinner() {
+    spinner.classList.add("hidden");
+    spinner.classList.remove("flex");
+
+    list.classList.remove("hidden");
+    list.classList.add("flex");
+};
+
+function displayError() {
+    hideSpinner();
+
+    list.classList.add("hidden");
+    list.classList.remove("flex");
+
+    error.classList.remove("hidden");
+    error.classList.add("flex");
+
+    const errorButton = error.querySelector(".error-button");
+
+    errorButton.onclick = function () {
+        showSpinner();
+        updateData();
+    }
 };
