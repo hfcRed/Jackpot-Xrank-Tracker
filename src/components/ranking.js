@@ -21,8 +21,8 @@ window.addEventListener("load", async () => {
 });
 
 async function updateData() {
-    data = await getRankData();
     clearInterval(countdown);
+    data = await getRankData();
     startCountdown();
 
     if (!data) { displayError(); return; };
