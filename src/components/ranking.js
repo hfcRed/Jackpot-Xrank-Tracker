@@ -214,10 +214,14 @@ function hideSpinner() {
 
     list.classList.remove("hidden");
     list.classList.add("flex");
+
+    error.classList.add("hidden");
+    error.classList.remove("flex");
 };
 
 function displayError() {
-    hideSpinner();
+    spinner.classList.add("hidden");
+    spinner.classList.remove("flex");
 
     list.classList.add("hidden");
     list.classList.remove("flex");
