@@ -4,6 +4,8 @@
 
 Source code for the frontend of the [jackpot xrank tracker](https://jackpot-xrank-tracker.pages.dev) for displaying the position of the team members on the Top 500 X-Rank leaderboards
 
+![chrome_5RbZ2BY2hM](https://github.com/hfcRed/jackpot-xrank-tracker/assets/101019309/7324d334-07ce-43c8-8496-f4489f9d59ba)
+
 </div>
 
 ---
