@@ -44,20 +44,20 @@ const members = [
     Members
   </h2>
   <div class="ssm:px-4 my-4">
-    <img class="rounded-lg" src="/images/banner.webp" alt="" />
+    <img class="rounded-lg w-full h-full" src="/images/banner.webp" alt="" />
   </div>
   {
     members.map((credit) => (
       <div class="flex flex-col ssm:flex-row p-4 gap-4 bg-backgroundLight rounded-lg justify-between bg-shinesmall items-center">
         <div class="flex gap-4 items-center">
-          <img class="rounded-full h-10" src={credit.icon} alt="" />
+          <img class="rounded-full h-10 w-10" src={credit.icon} alt="" />
           <p class="text-xl">{credit.name}</p>
         </div>
         <div class="flex gap-4 items-center">
           {Object.entries(credit.socials).map(([key, value]) => (
             <a href={value} target="_blank">
               <img
-                class="h-10 hover:-rotate-12 hover:scale-105 transition-all duration-200"
+                class="h-10 w-10 hover:-rotate-12 hover:scale-105 transition-all duration-200"
                 src={`/images/socials/${key}.webp`}
                 alt=""
               />
