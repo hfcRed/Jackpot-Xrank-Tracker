@@ -140,7 +140,16 @@ function orderItems() {
         item.classList.remove("item-1", "item-2", "item-3", "item-4");
         item.classList.add(`item-${Array.from(list.children).indexOf(item) + 1}`);
     }
+
+    validateOrder();
 };
+
+function validateOrder() {
+    const powerValues = Array.from(list.querySelectorAll(".item-power")).map(item => parseInt(item.textContent));
+    const sortedValues = powerValues.slice().sort((a, b) => b - a);
+
+    if (powerValues.join() !== sortedValues.join()) orderItems();
+}
 
 function prepareFilters() {
     const filters = document.querySelector(".filters").children;
