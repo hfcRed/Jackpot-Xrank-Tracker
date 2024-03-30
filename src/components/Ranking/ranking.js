@@ -147,7 +147,7 @@ function orderItems() {
 function validateOrder() {
     const powerValues = Array.from(list.querySelectorAll(".item-power")).map(item => parseInt(item.textContent));
     const sortedValues = powerValues.slice().sort((a, b) => b - a);
-    console.log(powerValues, sortedValues);
+
     if (powerValues.join() !== sortedValues.join()) orderItems();
 }
 
