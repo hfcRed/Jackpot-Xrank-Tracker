@@ -73,16 +73,16 @@ async function drawItems() {
         const badgeIDs = badges.map(badge => atob(badge).toString().split("-")[1]);
 
         const weapon = weaponData.find(weapon => weapon.Id == weaponID);
-        const weaponLink = weapon ? `https://raw.githubusercontent.com/Leanny/splat3/main/images/weapon_flat/Path_Wst_${weapon.__RowId}.webp` : null;
+        const weaponLink = weapon ? `https://raw.githubusercontent.com/Leanny/splat3/main/images/weapon_flat/Path_Wst_${weapon.__RowId}.png` : null;
 
         const banner = bannerData.find(banner => banner.Id == bannerID);
-        const bannerLink = banner ? `https://raw.githubusercontent.com/Leanny/splat3/main/images/npl/${banner.__RowId}.webp` : null;
+        const bannerLink = banner ? `https://raw.githubusercontent.com/Leanny/splat3/main/images/npl/${banner.__RowId}.png` : null;
 
         const badgeLinks = badgeIDs.map(badgeID => {
             if (badgeID == undefined) return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
             const badge = badgeData.find(data => data.Id == badgeID);
-            return badge ? `https://raw.githubusercontent.com/Leanny/splat3/main/images/badge/Badge_${badge.Name}.webp` : null;
+            return badge ? `https://raw.githubusercontent.com/Leanny/splat3/main/images/badge/Badge_${badge.Name}.png` : null;
         });
 
         const newPlayer = document.getElementById(id) ? false : true;
