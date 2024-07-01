@@ -37,7 +37,7 @@ async function getRankData() {
         const timeoutPromise = new Promise((_, reject) =>
             setTimeout(() => reject(new Error("Timeout")), 60000)
         );
-        const dataPromise = fetch("https://splat.top/api/jackpot");
+        const dataPromise = fetch("");
 
         const response = await Promise.race([timeoutPromise, dataPromise]);
         if (!response.ok) throw new Error("No data received");
